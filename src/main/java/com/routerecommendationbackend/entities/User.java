@@ -30,13 +30,13 @@ public class User {
     @JsonProperty("email")
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "password", length = 255)
     @JsonProperty("password")
     private String password;
 
     @Column(name = "picture_url")
     @JsonProperty("picture_url")
-    private String picture_url = "https://robohash.org/hehehe?bgset=bg1";
+    private String picture_url;
 
     @Column(name = "points")
     @JsonProperty("points")
@@ -73,5 +73,11 @@ public class User {
 
     }
 
+    public User(String username, String full_name, String email, String password){
+        this. username = username;
+        this.full_name = full_name;
+        this.email = email;
+        this.password = password;
+    }
 
 }
