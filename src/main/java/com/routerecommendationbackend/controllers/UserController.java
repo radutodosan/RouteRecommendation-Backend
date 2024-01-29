@@ -1,5 +1,6 @@
 package com.routerecommendationbackend.controllers;
 
+import com.routerecommendationbackend.DTOs.PasswordDTO;
 import com.routerecommendationbackend.entities.User;
 import com.routerecommendationbackend.exceptions.UserNotFoundException;
 import com.routerecommendationbackend.exceptions.WrongPasswordException;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @DeleteMapping("/profile/{id}")
-    private ResponseEntity<?> deleteUser(@PathVariable Long id) throws UserNotFoundException {
+    private ResponseEntity<?> deleteUser(@PathVariable Long id){
         User existingUser = userService.findById(id);
         if(existingUser == null){
             return ResponseEntity.notFound().build();
@@ -50,12 +51,21 @@ public class UserController {
         if(existingUser == null){
             return ResponseEntity.notFound().build();
         }
-//        existingUser.setFull_name(user.getFull_name());
-//        existingUser.setEmail(user.getEmail());
-//        existingUser.setSaved_address(user.getSaved_address());
-//        existingUser.setPassword(user.getPassword());
 
         User updatedUser = userService.updateUser(id, user);
+
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @PutMapping("/profile/change-pass/{id}")
+    public ResponseEntity<User> changePassword(@PathVariable Long id, @RequestBody PasswordDTO passwordDTO) throws WrongPasswordException {
+        User existingUser = userService.findById(id);
+
+        if(existingUser == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        User updatedUser = userService.changePassword(id, passwordDTO.getOld_password(), passwordDTO.getNew_password());
 
         return ResponseEntity.ok(updatedUser);
     }

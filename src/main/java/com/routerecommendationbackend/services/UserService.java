@@ -10,8 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -102,6 +100,20 @@ public class UserService {
         }
 
         throw new WrongPasswordException();
-//        return null;
+    }
+
+    public User changePassword(Long id, String oldPass, String newPass) throws WrongPasswordException{
+        User user1  = this.findById(id);
+
+        String password = user1.getPassword();
+
+        boolean isPwdRight = passwordEncoder.matches(oldPass, password);
+
+        if(isPwdRight){
+            user1.setPassword(passwordEncoder.encode(newPass));
+            return userRepository.save(user1);
+        }
+
+        throw new WrongPasswordException();
     }
 }
