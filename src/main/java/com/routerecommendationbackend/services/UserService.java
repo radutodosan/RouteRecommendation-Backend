@@ -1,10 +1,7 @@
 package com.routerecommendationbackend.services;
 
 import com.routerecommendationbackend.entities.User;
-import com.routerecommendationbackend.exceptions.EmailExistsException;
-import com.routerecommendationbackend.exceptions.EmptyCredentialsException;
-import com.routerecommendationbackend.exceptions.UserExistsException;
-import com.routerecommendationbackend.exceptions.UserNotFoundException;
+import com.routerecommendationbackend.exceptions.*;
 import com.routerecommendationbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -28,9 +26,8 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(username));
     }
 
-    public User findById(Long id) throws UserNotFoundException {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("hello"));
+    public User findById(Long id){
+        return userRepository.findById(id).orElse(null);
     }
 
     public User createUser(User user) throws UserExistsException, EmailExistsException, EmptyCredentialsException {
@@ -40,7 +37,6 @@ public class UserService {
 
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new EmailExistsException("Email " + user.getEmail() + " already exists!");
-
         }
 
         if(user.getUsername().isBlank() && user.getEmail().isBlank() && user.getPassword().isBlank() && user.getFull_name().isBlank()){
@@ -80,5 +76,32 @@ public class UserService {
 
     public void deleteUser(Long id){
         userRepository.deleteById(id);
+    }
+
+    public User updateUser(Long id, User user) throws EmailExistsException, WrongPasswordException{
+        User user1  = this.findById(id);
+
+        if(!Objects.equals(user1.getEmail(), user.getEmail()) && userRepository.findByEmail(user.getEmail()).isPresent()){
+            throw new EmailExistsException("Email " + user.getEmail() + " already exists!");
+        }
+
+        if(user.getFull_name().isBlank() || user.getEmail().isBlank()){
+            throw new EmptyCredentialsException("Required credentials are empty!");
+        }
+
+        String password = user.getPassword();
+        String encodedPassword = user1.getPassword();
+
+        boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+
+        if(isPwdRight){
+            user1.setFull_name(user.getFull_name());
+            user1.setEmail(user.getEmail());
+            user1.setSaved_address(user.getSaved_address());
+            return userRepository.save(user1);
+        }
+
+        throw new WrongPasswordException();
+//        return null;
     }
 }

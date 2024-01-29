@@ -2,6 +2,7 @@ package com.routerecommendationbackend.controllers;
 
 import com.routerecommendationbackend.entities.User;
 import com.routerecommendationbackend.exceptions.UserNotFoundException;
+import com.routerecommendationbackend.exceptions.WrongPasswordException;
 import com.routerecommendationbackend.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,22 @@ public class UserController {
         }
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/profile/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) throws WrongPasswordException {
+        User existingUser = userService.findById(id);
+
+        if(existingUser == null){
+            return ResponseEntity.notFound().build();
+        }
+//        existingUser.setFull_name(user.getFull_name());
+//        existingUser.setEmail(user.getEmail());
+//        existingUser.setSaved_address(user.getSaved_address());
+//        existingUser.setPassword(user.getPassword());
+
+        User updatedUser = userService.updateUser(id, user);
+
+        return ResponseEntity.ok(updatedUser);
     }
 }
