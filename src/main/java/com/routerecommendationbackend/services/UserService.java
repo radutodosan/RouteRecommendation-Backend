@@ -2,6 +2,7 @@ package com.routerecommendationbackend.services;
 
 import com.routerecommendationbackend.entities.User;
 import com.routerecommendationbackend.exceptions.EmailExistsException;
+import com.routerecommendationbackend.exceptions.EmptyCredentialsException;
 import com.routerecommendationbackend.exceptions.UserExistsException;
 import com.routerecommendationbackend.exceptions.UserNotFoundException;
 import com.routerecommendationbackend.repositories.UserRepository;
@@ -27,7 +28,12 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(username));
     }
 
-    public User createUser(User user) throws UserExistsException, EmailExistsException{
+    public User findById(Long id) throws UserNotFoundException {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("hello"));
+    }
+
+    public User createUser(User user) throws UserExistsException, EmailExistsException, EmptyCredentialsException {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new UserExistsException("User " + user.getUsername() + " already exists!");
         }
@@ -35,6 +41,10 @@ public class UserService {
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new EmailExistsException("Email " + user.getEmail() + " already exists!");
 
+        }
+
+        if(user.getUsername().isBlank() && user.getEmail().isBlank() && user.getPassword().isBlank() && user.getFull_name().isBlank()){
+            throw new EmptyCredentialsException("Required credentials are empty!");
         }
 
         user.setPicture_url("https://robohash.org/" + user.getUsername() + ".png");
@@ -66,5 +76,9 @@ public class UserService {
 
     public List<User> getAllUsers(){
         return userRepository.findAllByOrderByPointsDesc();
+    }
+
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
     }
 }
