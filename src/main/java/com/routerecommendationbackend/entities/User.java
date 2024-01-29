@@ -40,7 +40,7 @@ public class User {
 
     @Column(name = "points")
     @JsonProperty("points")
-    private int points;
+    private int points = 10;
 
     @Column(name = "saved_address")
     @JsonProperty("saved_address")

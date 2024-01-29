@@ -8,9 +8,10 @@ import com.routerecommendationbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncode;
+    private PasswordEncoder passwordEncoder;
 
     public User findByUsername(String username) throws UserNotFoundException {
         return userRepository.findByUsername(username)
@@ -37,8 +38,33 @@ public class UserService {
         }
 
         user.setPicture_url("https://robohash.org/" + user.getUsername() + ".png");
-        user.setPassword(passwordEncode.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);
+    }
+
+    public User getUser(User user) throws UserNotFoundException {
+
+        User user1  = userRepository.findUserByUsername(user.getUsername());
+        if(user1 != null){
+            String password = user.getPassword();
+            String encodedPassword = user1.getPassword();
+
+            boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+
+
+            if(isPwdRight){
+                return user1;
+            }
+        }
+        else{
+            throw new UserNotFoundException(user.getUsername());
+
+        }
+        return null;
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAllByOrderByPointsDesc();
     }
 }
