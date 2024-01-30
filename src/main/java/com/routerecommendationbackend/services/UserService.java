@@ -71,6 +71,7 @@ public class UserService {
     public List<User> getAllUsers(){
         return userRepository.findAllByOrderByPointsDesc();
     }
+
     public List<User> searchUsers(String search){
         if(search.isBlank())
             return userRepository.findAll();

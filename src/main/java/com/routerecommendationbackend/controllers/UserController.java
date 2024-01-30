@@ -74,4 +74,9 @@ public class UserController {
     private List<User> searchUsers(@PathVariable String search){
         return userService.searchUsers(search);
     }
+
+    @GetMapping("/user/{username}")
+    private User getUserByUsername(@PathVariable String username) throws UserNotFoundException {
+        return userService.findByUsername(username);
+    }
 }
