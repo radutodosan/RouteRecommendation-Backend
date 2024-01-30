@@ -24,7 +24,7 @@ public class User {
 
     @Column(nullable = false)
     @JsonProperty("full_name")
-    private String full_name;
+    private String fullName;
 
     @Column(nullable = false, unique = true)
     @JsonProperty("email")
@@ -52,7 +52,7 @@ public class User {
 
     public User(String username, String full_name, String email, String password, String picture_url, int points, String saved_address){
         this. username = username;
-        this.full_name = full_name;
+        this.fullName = full_name;
         this.email = email;
         this.password = password;
         this.picture_url = picture_url;
@@ -64,7 +64,7 @@ public class User {
     public User(Long id, String username, String full_name, String email, String password, String picture_url, int points, String saved_address){
         this.id = id;
         this. username = username;
-        this.full_name = full_name;
+        this.fullName = full_name;
         this.email = email;
         this.password = password;
         this.picture_url = picture_url;
@@ -75,7 +75,7 @@ public class User {
 
     public User(String username, String full_name, String email, String password){
         this. username = username;
-        this.full_name = full_name;
+        this.fullName = full_name;
         this.email = email;
         this.password = password;
     }

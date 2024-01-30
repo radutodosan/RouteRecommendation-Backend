@@ -37,7 +37,7 @@ public class UserService {
             throw new EmailExistsException("Email " + user.getEmail() + " already exists!");
         }
 
-        if(user.getUsername().isBlank() && user.getEmail().isBlank() && user.getPassword().isBlank() && user.getFull_name().isBlank()){
+        if(user.getUsername().isBlank() && user.getEmail().isBlank() && user.getPassword().isBlank() && user.getFullName().isBlank()){
             throw new EmptyCredentialsException("Required credentials are empty!");
         }
 
@@ -71,6 +71,12 @@ public class UserService {
     public List<User> getAllUsers(){
         return userRepository.findAllByOrderByPointsDesc();
     }
+    public List<User> searchUsers(String search){
+        if(search.isBlank())
+            return userRepository.findAll();
+        return userRepository.findAllByFullNameContains(search);
+    }
+
 
     public void deleteUser(Long id){
         userRepository.deleteById(id);
@@ -83,7 +89,7 @@ public class UserService {
             throw new EmailExistsException("Email " + user.getEmail() + " already exists!");
         }
 
-        if(user.getFull_name().isBlank() || user.getEmail().isBlank()){
+        if(user.getFullName().isBlank() || user.getEmail().isBlank()){
             throw new EmptyCredentialsException("Required credentials are empty!");
         }
 
@@ -93,7 +99,7 @@ public class UserService {
         boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
 
         if(isPwdRight){
-            user1.setFull_name(user.getFull_name());
+            user1.setFullName(user.getFullName());
             user1.setEmail(user.getEmail());
             user1.setSaved_address(user.getSaved_address());
             return userRepository.save(user1);

@@ -69,4 +69,9 @@ public class UserController {
 
         return ResponseEntity.ok(updatedUser);
     }
+
+    @GetMapping("/search/{search}")
+    private List<User> searchUsers(@PathVariable String search){
+        return userService.searchUsers(search);
+    }
 }

@@ -17,4 +17,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByOrderByPointsDesc();
 
+    List<User> findAllByFullNameContains(String search);
+
 }
