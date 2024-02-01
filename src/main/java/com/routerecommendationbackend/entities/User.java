@@ -2,6 +2,7 @@ package com.routerecommendationbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.routerecommendationbackend.DTOs.FriendshipDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "users")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
+public class User implements Comparable<User>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +41,7 @@ public class User {
 
     @Column(name = "points")
     @JsonProperty("points")
-    private int points = 25;
+    private int points = 75 ;
 
     @Column(name = "saved_address")
     @JsonProperty("saved_address")
@@ -80,4 +81,8 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public int compareTo(User u) {
+        return getPoints() - u.getPoints();
+    }
 }

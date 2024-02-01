@@ -73,7 +73,7 @@ public class FriendshipService {
         List<User> searchedNonFriends = new ArrayList<>();
 
         for(User user: listOfNonFriends){
-            if(user.getFullName().contains(search))
+            if(user.getFullName().contains(search) || user.getUsername().contains(search))
                 searchedNonFriends.add(user);
         }
 
@@ -149,11 +149,7 @@ public class FriendshipService {
     }
 
     public List<User> getFriendsRanking(String username){
-        List<User> listOfFriends = this.getFriendsList(username);
 
-        listOfFriends.sort((User a1, User a2) -> a1.getPoints() - a2.getPoints());
-
-
-        return listOfFriends;
+        return  this.getFriendsList(username);
     }
 }

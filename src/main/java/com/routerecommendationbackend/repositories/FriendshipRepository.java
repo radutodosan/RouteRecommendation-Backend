@@ -39,11 +39,7 @@ public interface FriendshipRepository extends JpaRepository<FriendshipDTO, Long>
     FriendshipDTO deleteFriendshipByUsername01AndUsername02(String username01, String username02);
 
 
-    @Query("SELECT fs.user02 FROM FriendshipDTO fs WHERE fs.user01.username = :username AND fs.status = 1 ORDER BY fs.user01.points desc")
-    List<FriendshipDTO> getFriendsRanking01(String username);
 
-    @Query("SELECT fs.user01 FROM FriendshipDTO fs WHERE fs.user02.username = :username AND fs.status = 1 order by fs.user02.points desc")
-    List<FriendshipDTO> getFriendsRanking02(String username);
 
 
 }
