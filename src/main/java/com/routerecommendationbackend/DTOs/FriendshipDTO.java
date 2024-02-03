@@ -17,11 +17,11 @@ public class FriendshipDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user01_id", referencedColumnName = "id")
     private User user01;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user02_id", referencedColumnName = "id")
     private User user02;
 

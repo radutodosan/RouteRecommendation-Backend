@@ -102,7 +102,6 @@ public class UserService {
         if(isPwdRight){
             user1.setFullName(user.getFullName());
             user1.setEmail(user.getEmail());
-            user1.setSaved_address(user.getSaved_address());
             return userRepository.save(user1);
         }
 
