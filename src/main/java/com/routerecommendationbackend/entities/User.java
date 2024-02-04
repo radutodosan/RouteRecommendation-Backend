@@ -40,7 +40,7 @@ public class User implements Comparable<User>{
 
     @Column(name = "points")
     @JsonProperty("points")
-    private int points = 50 ;
+    private int points = 125 ;
 
     public User(){
 
