@@ -38,19 +38,19 @@ public class Route {
 
     @Column(nullable = false, unique = true)
     @JsonProperty("distance")
-    private int distance;
+    private int distance = 5;
 
     @Column(nullable = false, unique = true)
     @JsonProperty("time")
-    private int time;
+    private int time = 10;
 
     @Column(nullable = false, unique = true)
     @JsonProperty("emissions_saved")
-    private int emissions_saved;
+    private int emissions_saved = 100;
 
     @Column(nullable = false, unique = true)
     @JsonProperty("cal_burned")
-    private int cal_burned;
+    private int cal_burned = 125;
 
     @Column(nullable = false, unique = true)
     @JsonProperty("status")
