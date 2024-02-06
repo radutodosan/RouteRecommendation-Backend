@@ -1,6 +1,6 @@
 package com.routerecommendationbackend.enums;
 
-public enum Transport {
+public enum     Transport {
     ELECTRIC_VEHICLE,
     PUBLIC_TRANSPORT,
     BIKE,

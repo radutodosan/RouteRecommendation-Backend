@@ -35,4 +35,10 @@ public class RouteController {
     private ResponseEntity<Route> completeRoute(@RequestBody Route route){
         return ResponseEntity.ok(routeService.completeRoute(route));
     }
+
+    @DeleteMapping("notifications/route/{id}")
+    private void declineRoute(@PathVariable Long id){
+        routeService.declineRoute(id);
+    }
+
 }

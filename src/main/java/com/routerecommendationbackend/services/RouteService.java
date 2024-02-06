@@ -1,7 +1,6 @@
 package com.routerecommendationbackend.services;
 
 import com.routerecommendationbackend.entities.Route;
-import com.routerecommendationbackend.entities.User;
 import com.routerecommendationbackend.enums.Status;
 import com.routerecommendationbackend.repositories.RouteRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,32 +13,45 @@ import java.util.List;
 public class RouteService {
 
     private final RouteRepository routeRepository;
+    private final UserService userService;
 
 
-    public Route findById(Long id){
+    public Route findById(Long id) {
         return routeRepository.findById(id).orElse(null);
     }
-    public Route addRoute(Route route){
+
+    public Route addRoute(Route route) {
+
         return routeRepository.save(route);
     }
 
-    public List<Route> getPendingRoutes(Long id){
+    public List<Route> getPendingRoutes(Long id) {
         return routeRepository.findAllByUserIdAndStatusPending(id);
     }
 
-    public List<Route> getCompletedRoutes(Long id){
+    public List<Route> getCompletedRoutes(Long id) {
         return routeRepository.findAllByUserIdAndStatusCompleted(id);
     }
 
-    public Route completeRoute(Route route){
+    public Route completeRoute(Route route) {
         Route completedRoute = findById(route.getId());
 
-        if(completedRoute != null){
+        if (completedRoute != null) {
             completedRoute.setStatus(Status.COMPLETED);
+
+            userService.updatePoints(completedRoute.getUser().getId(), completedRoute.getEmissions_saved());
 
             return routeRepository.save(completedRoute);
         }
 
         return null;
     }
+
+    public void declineRoute(Long id) {
+        Route declinedRoute = findById(id);
+
+        if (declinedRoute != null)
+            routeRepository.delete(declinedRoute);
+    }
 }
+

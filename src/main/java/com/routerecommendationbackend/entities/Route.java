@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -55,6 +57,10 @@ public class Route {
     @Column(nullable = false, unique = true)
     @JsonProperty("status")
     private Status status = Status.PENDING;
+
+    @Column(nullable = false, unique = true)
+    @JsonProperty("date")
+    private LocalDate date = LocalDate.now();
 
     public Route(){
 

@@ -122,4 +122,16 @@ public class UserService {
 
         throw new WrongPasswordException();
     }
+
+    public User updatePoints(Long id, int points){
+        User user = this.findById(id);
+
+        if(user != null){
+            user.setPoints(user.getPoints() + points);
+
+            return userRepository.save(user);
+        }
+
+        return null;
+    }
 }
