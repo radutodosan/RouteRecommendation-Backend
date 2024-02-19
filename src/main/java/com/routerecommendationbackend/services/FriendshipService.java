@@ -4,7 +4,6 @@ import com.routerecommendationbackend.DTOs.FriendshipDTO;
 import com.routerecommendationbackend.entities.User;
 import com.routerecommendationbackend.enums.Status;
 import com.routerecommendationbackend.exceptions.FriendRequestException;
-import com.routerecommendationbackend.exceptions.RankingException;
 import com.routerecommendationbackend.exceptions.UserNotFoundException;
 import com.routerecommendationbackend.repositories.FriendshipRepository;
 import com.routerecommendationbackend.repositories.UserRepository;

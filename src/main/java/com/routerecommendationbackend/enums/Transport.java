@@ -5,4 +5,5 @@ public enum     Transport {
     PUBLIC_TRANSPORT,
     BIKE,
     ON_FOOT
+
 }
