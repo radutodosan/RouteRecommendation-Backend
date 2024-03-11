@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 @Service
@@ -70,6 +71,19 @@ public class UserService {
 
     public List<User> getAllUsers(){
         return userRepository.findAllByOrderByPointsDesc();
+    }
+
+    public List<User> getUvtUsers(){
+        List<User> allUsers = userRepository.findAllByOrderByPointsDesc();
+
+        List<User> uvtUsers = new ArrayList<>();
+        for (User user : allUsers){
+            if(user.getEmail().contains("@e-uvt.ro")) {
+                uvtUsers.add(user);
+            }
+        }
+
+        return uvtUsers;
     }
 
     public List<User> searchUsers(String search){

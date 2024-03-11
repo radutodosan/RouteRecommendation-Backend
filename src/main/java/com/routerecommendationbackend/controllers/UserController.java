@@ -34,6 +34,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/ranking/uvt")
+    private List<User> getUVTUsers(){
+        return userService.getUvtUsers();
+    }
+
     @DeleteMapping("/profile/{id}")
     private ResponseEntity<?> deleteUser(@PathVariable Long id){
         User existingUser = userService.findById(id);
