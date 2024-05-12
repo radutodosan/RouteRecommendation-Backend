@@ -119,7 +119,7 @@ public class StatsService {
             List<Route> listOfRoutes = userRoutesPerMonth.get(key);
             double moneySaved = 0;
             for(Route route: listOfRoutes)
-                moneySaved += (double) route.getDistance() / 2;
+                moneySaved += (double) route.getDistance() * 0.55;
             moneySavedPerMonth.put(key, moneySaved);
         }
 
