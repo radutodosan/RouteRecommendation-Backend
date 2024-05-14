@@ -50,17 +50,17 @@ public class StatsService {
         return nrOfRoutesByMonth;
     }
 
-    public Map<Integer, Integer> getKmCompletedPerMonth(Long user_id) throws StatsException{
-        Map<Integer, Integer> kmCompleterPerMonth = new HashMap<>();
+    public Map<Integer, Double> getKmCompletedPerMonth(Long user_id) throws StatsException{
+        Map<Integer, Double> kmCompleterPerMonth = new HashMap<>();
 
         Map<Integer, List<Route>> userRoutesPerMonth = this.getRoutesByMonth(user_id);
 
         for(int i = 1; i <= 12; i++)
-            kmCompleterPerMonth.put(i,0);
+            kmCompleterPerMonth.put(i,0.00);
 
         for(Integer key: userRoutesPerMonth.keySet()){
             List<Route> listOfRoutes = userRoutesPerMonth.get(key);
-            int kmCompleted = 0;
+            double kmCompleted = 0;
             for(Route route: listOfRoutes)
                 kmCompleted += route.getDistance();
             kmCompleterPerMonth.put(key, kmCompleted);

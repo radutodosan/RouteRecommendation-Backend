@@ -28,7 +28,7 @@ public class StatsController {
     }
 
     @GetMapping("statistics/km-month/{user_id}")
-    private Map<Integer, Integer> getKmCompletedPerMonth(@PathVariable Long user_id){
+    private Map<Integer, Double> getKmCompletedPerMonth(@PathVariable Long user_id){
         return statsService.getKmCompletedPerMonth(user_id);
     }
 

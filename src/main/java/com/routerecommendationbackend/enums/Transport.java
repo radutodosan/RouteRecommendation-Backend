@@ -1,9 +1,9 @@
 package com.routerecommendationbackend.enums;
 
-public enum     Transport {
-    ELECTRIC_VEHICLE,
-    PUBLIC_TRANSPORT,
-    BIKE,
-    ON_FOOT
+public enum Transport {
+    Electric_Vehicle,
+    Public_Transport,
+    Bike,
+    Walk
 
 }
