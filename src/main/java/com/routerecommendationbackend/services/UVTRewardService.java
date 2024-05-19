@@ -2,11 +2,15 @@ package com.routerecommendationbackend.services;
 
 import com.routerecommendationbackend.DTOs.UVTRewardDTO;
 import com.routerecommendationbackend.entities.User;
+import com.routerecommendationbackend.enums.Status;
+import com.routerecommendationbackend.exceptions.RewardNotFoundException;
 import com.routerecommendationbackend.repositories.UVTRewardRepository;
 import com.routerecommendationbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -49,8 +53,20 @@ public class UVTRewardService {
         }
 
         return uvtUsers.get(0);
+    }
 
+    public UVTRewardDTO claimReward(UVTRewardDTO reward) throws RewardNotFoundException {
 
+        UVTRewardDTO searchedReward = uvtRewardRepository.findByUserUsernameAndDateAndStatus(reward.getUser().getUsername(), reward.getDate(), reward.getStatus());
 
+        if(searchedReward != null){
+            searchedReward.setStatus(Status.COMPLETED);
+            uvtRewardRepository.save(searchedReward);
+        }
+        else{
+            throw new RewardNotFoundException(reward.getUser().getUsername(), reward.getDate());
+        }
+
+        return searchedReward;
     }
 }
