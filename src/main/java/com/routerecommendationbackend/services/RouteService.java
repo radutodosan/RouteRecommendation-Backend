@@ -2,6 +2,8 @@ package com.routerecommendationbackend.services;
 
 import com.routerecommendationbackend.entities.Route;
 import com.routerecommendationbackend.enums.Status;
+import com.routerecommendationbackend.exceptions.ThrowableException;
+import com.routerecommendationbackend.exceptions.route.RouteNotFoundException;
 import com.routerecommendationbackend.repositories.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +35,7 @@ public class RouteService {
         return routeRepository.findAllByUserIdAndStatusCompleted(id);
     }
 
-    public Route completeRoute(Route route) {
+    public Route completeRoute(Route route) throws RouteNotFoundException, ThrowableException {
         Route completedRoute = findById(route.getId());
 
         if (completedRoute != null) {
@@ -43,15 +45,17 @@ public class RouteService {
 
             return routeRepository.save(completedRoute);
         }
-
-        return null;
+        else
+            throw new RouteNotFoundException(route.getId());
     }
 
-    public void declineRoute(Long id) {
+    public void declineRoute(Long id) throws RouteNotFoundException {
         Route declinedRoute = findById(id);
 
         if (declinedRoute != null)
             routeRepository.delete(declinedRoute);
+        else
+            throw new RouteNotFoundException(id);
     }
 }
 

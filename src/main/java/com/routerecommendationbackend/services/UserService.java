@@ -2,6 +2,10 @@ package com.routerecommendationbackend.services;
 
 import com.routerecommendationbackend.entities.User;
 import com.routerecommendationbackend.exceptions.*;
+import com.routerecommendationbackend.exceptions.user.EmailExistsException;
+import com.routerecommendationbackend.exceptions.user.UserExistsException;
+import com.routerecommendationbackend.exceptions.user.UserNotFoundException;
+import com.routerecommendationbackend.exceptions.user.WrongPasswordException;
 import com.routerecommendationbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +101,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User updateUser(Long id, User user) throws EmailExistsException, WrongPasswordException{
+    public User updateUser(Long id, User user) throws EmailExistsException, WrongPasswordException {
         User user1  = this.findById(id);
 
         if(!Objects.equals(user1.getEmail(), user.getEmail()) && userRepository.findByEmail(user.getEmail()).isPresent()){
@@ -137,15 +141,16 @@ public class UserService {
         throw new WrongPasswordException();
     }
 
-    public User updatePoints(Long id, int points){
+    public void updatePoints(Long id, int points) throws ThrowableException {
         User user = this.findById(id);
 
         if(user != null){
             user.setPoints(user.getPoints() + points);
 
-            return userRepository.save(user);
+            userRepository.save(user);
         }
-
-        return null;
+        else{
+            throw new ThrowableException("Error updating points for user with id: " + id);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.routerecommendationbackend.exceptions;
+package com.routerecommendationbackend.exceptions.friendship;
 
 public class FriendRequestException extends RuntimeException{
     public FriendRequestException(String message) {

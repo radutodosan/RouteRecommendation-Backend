@@ -1,4 +1,4 @@
-package com.routerecommendationbackend.exceptions;
+package com.routerecommendationbackend.exceptions.ranking;
 
 public class RankingException extends RuntimeException{
     public RankingException(String message) {

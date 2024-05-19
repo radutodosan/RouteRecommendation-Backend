@@ -1,4 +1,4 @@
-package com.routerecommendationbackend.exceptions;
+package com.routerecommendationbackend.exceptions.stats;
 
 public class StatsException extends RuntimeException{
 

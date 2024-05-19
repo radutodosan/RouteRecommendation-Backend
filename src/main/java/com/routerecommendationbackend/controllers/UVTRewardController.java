@@ -2,12 +2,11 @@ package com.routerecommendationbackend.controllers;
 
 import com.routerecommendationbackend.DTOs.UVTRewardDTO;
 import com.routerecommendationbackend.entities.User;
-import com.routerecommendationbackend.exceptions.RewardNotFoundException;
+import com.routerecommendationbackend.exceptions.uvtrewards.RewardNotFoundException;
 import com.routerecommendationbackend.services.UVTRewardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController

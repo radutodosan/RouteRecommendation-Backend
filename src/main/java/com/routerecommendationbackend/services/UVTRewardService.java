@@ -3,14 +3,12 @@ package com.routerecommendationbackend.services;
 import com.routerecommendationbackend.DTOs.UVTRewardDTO;
 import com.routerecommendationbackend.entities.User;
 import com.routerecommendationbackend.enums.Status;
-import com.routerecommendationbackend.exceptions.RewardNotFoundException;
+import com.routerecommendationbackend.exceptions.uvtrewards.RewardNotFoundException;
 import com.routerecommendationbackend.repositories.UVTRewardRepository;
 import com.routerecommendationbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service

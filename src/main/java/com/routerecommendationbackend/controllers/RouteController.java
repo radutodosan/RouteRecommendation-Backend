@@ -1,6 +1,8 @@
 package com.routerecommendationbackend.controllers;
 
 import com.routerecommendationbackend.entities.Route;
+import com.routerecommendationbackend.exceptions.ThrowableException;
+import com.routerecommendationbackend.exceptions.route.RouteNotFoundException;
 import com.routerecommendationbackend.services.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +34,12 @@ public class RouteController {
     }
 
     @PutMapping("notifications/route")
-    private ResponseEntity<Route> completeRoute(@RequestBody Route route){
+    private ResponseEntity<Route> completeRoute(@RequestBody Route route) throws RouteNotFoundException, ThrowableException {
         return ResponseEntity.ok(routeService.completeRoute(route));
     }
 
     @DeleteMapping("notifications/route/{id}")
-    private void declineRoute(@PathVariable Long id){
+    private void declineRoute(@PathVariable Long id) throws RouteNotFoundException {
         routeService.declineRoute(id);
     }
 

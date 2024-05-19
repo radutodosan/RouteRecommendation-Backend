@@ -1,4 +1,4 @@
-package com.routerecommendationbackend.exceptions;
+package com.routerecommendationbackend.exceptions.user;
 
 public class WrongPasswordException extends Throwable {
     public WrongPasswordException() {

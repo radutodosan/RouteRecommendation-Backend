@@ -1,4 +1,4 @@
-package com.routerecommendationbackend.exceptions;
+package com.routerecommendationbackend.exceptions.user;
 
 public class UserExistsException extends RuntimeException{
     public UserExistsException(String message) {

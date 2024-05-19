@@ -2,7 +2,7 @@ package com.routerecommendationbackend.services;
 
 import com.routerecommendationbackend.entities.Route;
 import com.routerecommendationbackend.enums.Transport;
-import com.routerecommendationbackend.exceptions.StatsException;
+import com.routerecommendationbackend.exceptions.stats.StatsException;
 import com.routerecommendationbackend.repositories.StatsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

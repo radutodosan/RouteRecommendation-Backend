@@ -1,7 +1,7 @@
 package com.routerecommendationbackend.controllers;
 
 import com.routerecommendationbackend.DTOs.FriendshipDTO;
-import com.routerecommendationbackend.exceptions.UserNotFoundException;
+import com.routerecommendationbackend.exceptions.user.UserNotFoundException;
 import com.routerecommendationbackend.services.FriendshipService;
 import com.routerecommendationbackend.entities.User;
 import lombok.RequiredArgsConstructor;

@@ -2,8 +2,8 @@ package com.routerecommendationbackend.controllers;
 
 import com.routerecommendationbackend.DTOs.PasswordDTO;
 import com.routerecommendationbackend.entities.User;
-import com.routerecommendationbackend.exceptions.UserNotFoundException;
-import com.routerecommendationbackend.exceptions.WrongPasswordException;
+import com.routerecommendationbackend.exceptions.user.UserNotFoundException;
+import com.routerecommendationbackend.exceptions.user.WrongPasswordException;
 import com.routerecommendationbackend.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
