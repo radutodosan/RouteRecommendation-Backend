@@ -19,7 +19,7 @@ public class AddressController {
     }
 
     @PutMapping("profile/addresses")
-    private SavedAddressDTO getAddresses(@RequestBody SavedAddressDTO savedAddressDTO){
+    private SavedAddressDTO saveAddresses(@RequestBody SavedAddressDTO savedAddressDTO){
         return this.addressService.saveAddresses(savedAddressDTO);
     }
 }

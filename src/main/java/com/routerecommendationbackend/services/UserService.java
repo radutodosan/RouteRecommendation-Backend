@@ -22,7 +22,17 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder = new PasswordEncoder() {
+        @Override
+        public String encode(CharSequence rawPassword) {
+            return null;
+        }
+
+        @Override
+        public boolean matches(CharSequence rawPassword, String encodedPassword) {
+            return false;
+        }
+    };
 
     public User findByUsername(String username) throws UserNotFoundException {
         return userRepository.findByUsername(username)
