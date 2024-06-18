@@ -21,41 +21,57 @@ public class AddressService {
 
     public SavedAddressDTO saveAddresses(SavedAddressDTO savedAddressDTO){
 
-        SavedAddressDTO updatedAddresses = this.addressRepository.findByUserId(savedAddressDTO.getUser().getId());
+        String home = "";
+        if(savedAddressDTO.getHome() != null){
+            home = Base64.getEncoder().encodeToString(savedAddressDTO.getHome().getBytes());
+            savedAddressDTO.setHome(home);
 
-        if(updatedAddresses != null){
-
-            String home = Base64.getEncoder().encodeToString(savedAddressDTO.getHome().getBytes());
-            String work = Base64.getEncoder().encodeToString(savedAddressDTO.getWork().getBytes());
-            String school = Base64.getEncoder().encodeToString(savedAddressDTO.getSchool().getBytes());
-            String other = Base64.getEncoder().encodeToString(savedAddressDTO.getOther().getBytes());
-
-            updatedAddresses.setHome(home);
-            updatedAddresses.setWork(work);
-            updatedAddresses.setSchool(school);
-            updatedAddresses.setOther(other);
-
-            addressRepository.save(updatedAddresses);
-
-            updatedAddresses.setHome(decodeAddress(home));
-            updatedAddresses.setWork(decodeAddress(work));
-            updatedAddresses.setSchool(decodeAddress(school));
-            updatedAddresses.setOther(decodeAddress(other));
-
-            return updatedAddresses;
         }
 
-        return addressRepository.save(savedAddressDTO);
+        String work = "";
+        if(savedAddressDTO.getWork() != null){
+            work = Base64.getEncoder().encodeToString(savedAddressDTO.getWork().getBytes());
+            savedAddressDTO.setWork(work);
+        }
+
+        String school = "";
+        if(savedAddressDTO.getSchool() != null){
+            school = Base64.getEncoder().encodeToString(savedAddressDTO.getSchool().getBytes());
+            savedAddressDTO.setSchool(school);
+        }
+
+        String other = "";
+        if(savedAddressDTO.getOther() != null){
+            other = Base64.getEncoder().encodeToString(savedAddressDTO.getOther().getBytes());
+            savedAddressDTO.setOther(other);
+        }
+
+        addressRepository.save(savedAddressDTO);
+
+        if(!home.isEmpty())
+            savedAddressDTO.setHome(decodeAddress(home));
+        if(!work.isEmpty())
+            savedAddressDTO.setWork(decodeAddress(work));
+        if(!school.isEmpty())
+            savedAddressDTO.setSchool(decodeAddress(school));
+        if(!other.isEmpty())
+            savedAddressDTO.setOther(decodeAddress(other));
+
+        return savedAddressDTO;
     }
 
     public SavedAddressDTO getAddresses(Long id){
         SavedAddressDTO addresses = addressRepository.findByUserId(id);
 
-        addresses.setHome(decodeAddress(addresses.getHome()));
-        addresses.setWork(decodeAddress(addresses.getWork()));
-        addresses.setSchool(decodeAddress(addresses.getSchool()));
-        addresses.setOther(decodeAddress(addresses.getOther()));
+        if(addresses != null){
+            addresses.setHome(decodeAddress(addresses.getHome()));
+            addresses.setWork(decodeAddress(addresses.getWork()));
+            addresses.setSchool(decodeAddress(addresses.getSchool()));
+            addresses.setOther(decodeAddress(addresses.getOther()));
 
-        return addresses;
+            return addresses;
+        }
+
+        return null;
     }
 }
