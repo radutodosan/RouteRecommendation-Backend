@@ -1,5 +1,6 @@
 package com.routerecommendationbackend.controllers;
 
+import com.routerecommendationbackend.DTOs.ForgotPasswordDTO;
 import com.routerecommendationbackend.DTOs.PasswordDTO;
 import com.routerecommendationbackend.entities.User;
 import com.routerecommendationbackend.exceptions.user.UserNotFoundException;
@@ -63,7 +64,7 @@ public class UserController {
     }
 
     @PutMapping("/profile/change-pass/{id}")
-    public ResponseEntity<User> changePassword(@PathVariable Long id, @RequestBody PasswordDTO passwordDTO) throws WrongPasswordException {
+    public ResponseEntity<User> changePassword(@PathVariable Long id, @RequestBody PasswordDTO passwordDTO) throws WrongPasswordException{
         User existingUser = userService.findById(id);
 
         if(existingUser == null){
@@ -74,6 +75,21 @@ public class UserController {
 
         return ResponseEntity.ok(updatedUser);
     }
+
+    @PutMapping("/profile/forgot-pass")
+    public ResponseEntity<Boolean> forgotPassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO) throws WrongPasswordException, UserNotFoundException {
+        User existingUser = userService.findByUsername(forgotPasswordDTO.getUsername());
+
+        if(existingUser == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        boolean response = userService.forgotPassword(forgotPasswordDTO.getUsername(), forgotPasswordDTO.getTmp_password());
+
+        return ResponseEntity.ok(response);
+    }
+
+
 
     @GetMapping("/search/{search}")
     private List<User> searchUsers(@PathVariable String search){

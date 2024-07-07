@@ -151,6 +151,19 @@ public class UserService {
         throw new WrongPasswordException();
     }
 
+    public boolean forgotPassword(String username, String newPass) throws WrongPasswordException, UserNotFoundException {
+        User user1  = this.findByUsername(username);
+
+        if(!user1.getUsername().isEmpty()){
+            user1.setPassword(passwordEncoder.encode(newPass));
+            userRepository.save(user1);
+
+            return true;
+        }
+
+        throw new WrongPasswordException();
+    }
+
     public void updatePoints(Long id, int points) throws ThrowableException {
         User user = this.findById(id);
 
