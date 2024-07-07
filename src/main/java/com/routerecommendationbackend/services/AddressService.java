@@ -21,6 +21,12 @@ public class AddressService {
 
     public SavedAddressDTO saveAddresses(SavedAddressDTO savedAddressDTO){
 
+        SavedAddressDTO getAddresses = this.addressRepository.findByUserId(savedAddressDTO.getUser().getId());
+
+        if(getAddresses != null){
+            savedAddressDTO.setId(getAddresses.getId());
+        }
+
         String home = "";
         if(savedAddressDTO.getHome() != null){
             home = Base64.getEncoder().encodeToString(savedAddressDTO.getHome().getBytes());
