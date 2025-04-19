@@ -30,7 +30,7 @@ public class Route {
     @JsonProperty("start")
     private String start;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "end_location", nullable = false, unique = true)
     @JsonProperty("end")
     private String end;
 
